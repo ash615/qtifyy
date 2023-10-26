@@ -1,41 +1,45 @@
-import React, { useRef } from 'react'
-import { SwiperSlide, Swiper, useSwiper } from 'swiper/react'
+import React, { useEffect } from 'react';
+
 import styles from './Carousel.module.css';
-import {Navigation} from 'swiper/modules';
-import { useEffect } from 'react';
+
+import { Navigation } from 'swiper';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 import CarouselLeftNavigation from './CarouselLeftNavigation/CarouselLeftNavigation';
 import CarouselRightNavigation from './CarouselRightNavigation/CarouselRightNavigation';
 
-const Controls = ({data}) => {
+const Controls = ({ data }) => {
+  const swiper = useSwiper();
 
-    const swiper = useSwiper();
-    useEffect(()=>{
-     //   console.log(swiper.slideTo(0, 300))
-        swiper.slideTo(0, 100);
-    },[data]);
+  useEffect(() => {
+    swiper.slideTo(0, null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+};
 
-    return <></>;
-}
-
-const Carousel = ({data, renderCardComponent}) => {
-
+const Carousel = ({ data, renderCardComponent }) => {
   return (
-    <div className={styles.wrapper}>
-        <Swiper
-        initialSlide={0} modules={{Navigation}} slidePerView={"auto"} spaceBetween={40} allowTouchOption={true}>
-            <Controls data={data} />
-            <CarouselLeftNavigation/>
-            <CarouselRightNavigation/>
-            {
-                data.map((item) => (
-                    <SwiperSlide>
-                        {renderCardComponent(item)}
-                    </SwiperSlide>
-                ))
-            }
-        </Swiper>
-    </div>
-  )
-}
+    <div className={styles.container}>
+      <Swiper
+        style={{ padding: '0 20px' }}
+        initialSlide={0}
+        slidesPerView={'auto'}
+        spaceBetween={30}
+        modules={[Navigation]}
+        allowTouchMove
+      >
+        <Controls data={data} />
+        <CarouselLeftNavigation />
+        <CarouselRightNavigation />
 
-export default Carousel
+        {data.map((item, idx) => {
+          return <SwiperSlide key={idx}>{renderCardComponent(item)}</SwiperSlide>;
+        })}
+      </Swiper>
+    </div>
+  );
+};
+
+export default Carousel;

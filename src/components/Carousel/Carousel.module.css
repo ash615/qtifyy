@@ -1,18 +1,22 @@
 .wrapper{
     position: relative;
 }
+/* .swiperWrapper{
+    display: flex;
+    align-items: center;
+} */
 
 .leftNavigation{
     position: absolute;
-    left: -10px;
+    left: 10px;
     top: 40%;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 108;  
 }
 
 .rightNavigation{
     position: absolute;
-    left: 10px;
+    right: 10px;
     top: 40%;
     transform: translateY(-50%);
     z-index: 10;
